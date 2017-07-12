@@ -13,5 +13,11 @@ exports.apartaments = functions.https.onRequest((req, res) => {
         apartaments.on('value', (snapshot) => {
             res.json(snapshot.val())
         })
-    }
+    } else if (req.method == 'POST') {
+        const apartaments = firebase.database().ref('/apartaments')
+        const apartament = req.body
+        apartaments.push(apartament)
+            .then(res.json(apartament))
+            .catch(err => res.json(err))
+    } 
 })
